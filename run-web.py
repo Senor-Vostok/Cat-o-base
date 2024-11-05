@@ -4,13 +4,12 @@ import json
 import requests
 import os
 
-
 app = Flask(__name__)
 
 
 @app.route("/")
 def base():
-    return render_template('base.html', url="/extended")
+    return render_template('base.html', url="/extended", url2="/test")
 
 
 @app.route('/extended')
@@ -24,12 +23,17 @@ def base_extended():
         {'title': 'Название 6', 'image': 'cat6.jpg', 'url': '/page6', 'description': 'Описание для Названия 6'},
     ]
     ads = [
-        {"image": "ad_ibio.png", "url": "https://discord.com/oauth2/authorize?client_id=834775714011938866&permissions=8&scope=bot"},
+        {"image": "ad_ibio.png",
+         "url": "https://discord.com/oauth2/authorize?client_id=834775714011938866&permissions=8&scope=bot"},
         {"image": "ad_main.png", "url": "https://ost-arbetsatt.itch.io/main-element"},
         {"image": "ad_akmor.png", "url": "https://t.me/akmor3"},
     ]
     return render_template('extended.html', cards=cards, ads=ads)
 
+
+@app.route('/test')
+def testing():
+    return render_template('test.html')
 
 
 if __name__ == '__main__':

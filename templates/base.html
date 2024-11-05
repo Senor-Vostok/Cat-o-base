@@ -134,6 +134,14 @@
     const circle = document.getElementById('circle');
     const overlay = document.getElementById('overlay');
 
+    // Обработчик события для нажатия клавиши
+    searchInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Отменить действие по умолчанию
+            searchFunction(); // Выполнить поиск
+        }
+    });
+
     function clearPlaceholder() {
         if (searchInput.value === '') {
             searchInput.placeholder = '';
@@ -149,6 +157,7 @@
     function expandOverlay() {
         overlay.style.height = '100%';
 
+        // Удаляем задержку на подтверждение перехода
         setTimeout(() => {
             window.location.href = "{{url}}"; // Переход к новой странице после завершения анимации
         }, 1000); // Задержка для завершения анимации оверлея
@@ -168,13 +177,15 @@
 
         setTimeout(() => {
             button.style.display = 'none';
+            window.location.href = "{{url2}}";
         }, 1500);
     }
 
     function searchFunction() {
         const query = searchInput.value;
-        // Здесь можно добавить логику для обработки поискового запроса
-        alert('Поиск по запросу: ' + query);
+
+        // Перенаправление на страницу /extended с добавлением поискового запроса в URL
+        window.location.href = `/extended?query=${encodeURIComponent(query)}`;
     }
 </script>
 </body>
