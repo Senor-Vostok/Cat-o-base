@@ -14,6 +14,18 @@ def base_extended():
     cards = [
         {'title': CatBase[i][0], 'image': f'{i + 1}.png', 'description': ' '.join(CatBase[i][1:])} for i in range(len(CatBase))
     ]
+    for i in range(len(cards)):
+        cards[i]["description"] = ""
+        cards[i]["description"] += "Порода - " + CatBase[i][0] + "\n"
+        cards[i]["description"] += "Время жизни - " + CatBase[i][1] + "\n"
+        cards[i]["description"] += "Интеллект - " + CatBase[i][2] + "\n"
+        cards[i]["description"] += "Общительность - " + CatBase[i][3] + "\n"
+        cards[i]["description"] += "Ласковость - " + CatBase[i][4] + "\n"
+        cards[i]["description"] += "Шерсть - " + CatBase[i][5] + "\n"
+        cards[i]["description"] += "Размер - " + CatBase[i][6] + "\n"
+        cards[i]["description"] += "Активность - " + CatBase[i][7] + "\n"
+        cards[i]["description"] += "Здоровье - " + CatBase[i][8]
+    print(cards[i]["description"])
     ads = [
         {"image": "ad_ibio.png",
          "url": "https://discord.com/oauth2/authorize?client_id=834775714011938866&permissions=8&scope=bot"},
