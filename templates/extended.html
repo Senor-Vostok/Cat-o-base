@@ -15,22 +15,46 @@
             align-items: center;
             padding-top: 20px;
         }
-        .search-bar {
+        .search-container {
             width: 80%;
             max-width: 500px;
-            padding: 10px;
+            display: flex;
+            gap: 10px; /* Отступ между строкой и кнопкой */
             margin: 20px 0;
+        }
+        .search-bar {
+            flex: 1; /* Заполнение оставшегося пространства */
+            padding: 10px;
             font-size: 1.1em;
             border: 1px solid #ccc;
             border-radius: 4px;
+        }
+        .search-button {
+            padding: 10px 15px;
+            font-size: 1.1em;
+            background-color: #caa87c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .search-button:hover {
+            background-color: #b58a6a; /* Цвет при наведении */
+        }
+        .main-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px; /* Максимальная ширина для центра */
         }
         .card-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             width: 100%;
-            max-width: 1000px;
-            justify-content: center;
+            max-width: 800px; /* Максимальная ширина карточек */
         }
         .card {
             background-color: #f9f9f9;
@@ -42,7 +66,7 @@
             transition: all 0.3s ease;
             color: inherit;
             width: 100%;
-            height: 300px;
+            height: 300px; /* Высота карточки */
             position: relative; /* Для корректного позиционирования при раскрытии */
         }
         .card.expanded {
@@ -51,74 +75,111 @@
         }
         .card img {
             width: 100%;
-            height: 70%;
-            object-fit: cover;
+            height: 70%; /* Устанавливаем высоту в 70% */
+            object-fit: cover; /* Обрезка изображения */
         }
         .card-title {
             padding: 10px;
             font-size: 1.2em;
             background-color: #caa87c;
             color: white;
+            text-align: center; /* Центрирование заголовка */
         }
         .card-description {
             display: none;
             padding: 10px;
             font-size: 1em;
             color: #333;
+            text-align: left; /* Выровнять описание по левому краю */
         }
         .card.expanded .card-description {
             display: block;
         }
 
         .ads-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
         .ad-image {
-            width: 150px;
-            height: 150px;
+            width: 150px; /* Ширина карточки рекламы */
+            height: 150px; /* Высота карточки рекламы */
             cursor: pointer;
             border: 1px solid #ccc;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            object-fit: cover; /* Обрезка изображения */
         }
     </style>
 </head>
 <body>
 
-<input type="text" class="search-bar" placeholder="Поиск по породе">
-
-<div class="card-container">
-    {% for card in cards %}
-    <div class="card" onclick="toggleCard(this)">
-        <img src="{{ url_for('static', filename='images/' + card.image) }}" alt="{{ card.title }}">
-        <div class="card-title">{{ card.title }}</div>
-        <div class="card-description">{{ card.description }}</div>
-    </div>
-    {% endfor %}
+<div class="search-container">
+    <input type="text" class="search-bar" placeholder="Поиск по породе" id="search-input">
+    <button class="search-button" id="search-button">Поиск</button>
 </div>
 
-<div class="ads-container">
-    {% for ad in ads %}
-    <a href="{{ ad.url }}" target="_blank">
-        <img src="{{ url_for('static', filename='ads/' + ad.image) }}" alt="Реклама" class="ad-image">
-    </a>
-    {% endfor %}
+<div class="main-container">
+    <div class="card-container">
+        {% for card in cards %}
+        <div class="card" onclick="toggleCard(this)" data-description="{{ card.description }}" data-title="{{ card.title }}">
+            <img src="{{ url_for('static', filename='images/' + card.image) }}" alt="{{ card.title }}">
+            <div class="card-title">{{ card.title }}</div>
+            <div class="card-description"></div> <!-- Элемент для текста описания -->
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="ads-container">
+        {% for ad in ads %}
+        <a href="{{ ad.url }}" target="_blank">
+            <img src="{{ url_for('static', filename='ads/' + ad.image) }}" alt="Реклама" class="ad-image">
+        </a>
+        {% endfor %}
+    </div>
 </div>
 
 <script>
     function toggleCard(card) {
         const isExpanded = card.classList.contains('expanded');
-        document.querySelectorAll('.card').forEach(c => c.classList.remove('expanded'));
+        document.querySelectorAll('.card').forEach(c => {
+            c.classList.remove('expanded');
+            c.querySelector('.card-description').innerHTML = ''; // Очищаем текст описания
+        });
 
         if (!isExpanded) {
             card.classList.add('expanded');
+            const description = card.getAttribute('data-description');
+            card.querySelector('.card-description').innerHTML = description; // Добавляем текст описания
         }
     }
+
+    function searchCards() {
+        const searchInput = document.getElementById('search-input');
+        const searchText = searchInput.value.toLowerCase();
+        const cards = document.querySelectorAll('.card');
+        let found = false;
+
+        cards.forEach(card => {
+            const title = card.getAttribute('data-title').toLowerCase();
+            if (title.includes(searchText)) {
+                toggleCard(card); // Раскрываем карточку
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' }); // Прокручиваем к карточке
+                found = true;
+            }
+        });
+
+        if (!found) {
+            alert('Порода не найдена'); // Измененное сообщение
+        }
+    }
+
+    document.getElementById('search-button').addEventListener('click', searchCards);
+    document.getElementById('search-input').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            searchCards(); // Поиск по нажатию клавиши Enter
+        }
+    });
 </script>
 </body>
 </html>
