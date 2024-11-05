@@ -26,7 +26,7 @@ def base_extended():
     ads = [
         {"image": "ad_ibio.png", "url": "https://discord.com/oauth2/authorize?client_id=834775714011938866&permissions=8&scope=bot"},
         {"image": "ad_main.png", "url": "https://ost-arbetsatt.itch.io/main-element"},
-        {"image": "ad_akmor.png", "url": ""},
+        {"image": "ad_akmor.png", "url": "https://t.me/akmor3"},
     ]
     return render_template('extended.html', cards=cards, ads=ads)
 
