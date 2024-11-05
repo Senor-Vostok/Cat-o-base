@@ -1,8 +1,5 @@
-from flask import Flask, render_template, request, redirect
-import time
-import json
-import requests
-import os
+from flask import Flask, render_template
+import sqlite3
 
 app = Flask(__name__)
 
@@ -15,12 +12,7 @@ def base():
 @app.route('/extended')
 def base_extended():
     cards = [
-        {'title': 'Название 1', 'image': 'ger.jpg', 'url': '/page1', 'description': 'Описание для Названия 1'},
-        {'title': 'Название 2', 'image': 'cat2.jpg', 'url': '/page2', 'description': 'Описание для Названия 2'},
-        {'title': 'Название 3', 'image': 'cat3.jpg', 'url': '/page3', 'description': 'Описание для Названия 3'},
-        {'title': 'Название 4', 'image': 'cat4.jpg', 'url': '/page4', 'description': 'Описание для Названия 4'},
-        {'title': 'Название 5', 'image': 'cat5.jpg', 'url': '/page5', 'description': 'Описание для Названия 5'},
-        {'title': 'Название 6', 'image': 'cat6.jpg', 'url': '/page6', 'description': 'Описание для Названия 6'},
+        {'title': CatBase[i][0], 'image': f'{i + 1}.png', 'description': ' '.join(CatBase[i][1:])} for i in range(len(CatBase))
     ]
     ads = [
         {"image": "ad_ibio.png",
@@ -37,4 +29,12 @@ def testing():
 
 
 if __name__ == '__main__':
+    CatBase = list()
+    conn = sqlite3.connect('cats.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM cat_breeds')
+    users = cursor.fetchall()
+    for user in users:
+        CatBase.append(user[1:])
+    conn.close()
     app.run()
