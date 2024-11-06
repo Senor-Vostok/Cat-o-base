@@ -8,7 +8,8 @@ cursor = conn.cursor()
 cursor.execute('SELECT * FROM cat_breeds')
 users = cursor.fetchall()
 for user in users:
-    CatBase.append(user[1:])
+    CatBase.append(user)
+    CatBase.sort(key=lambda x:x[1])
     CatPoints[user[1]] = 0
 conn.close()
 
@@ -54,20 +55,20 @@ def base():
 @app.route('/extended')
 def base_extended():
     cards = [
-        {'title': CatBase[i][0], 'image': f'{i + 1}.png', 'description': ' '.join(CatBase[i][1:])} for i in
+        {'title': CatBase[i][1], 'image': f'{CatBase[i][0]}.png', 'description': ' '.join(CatBase[i][2:])} for i in
         range(len(CatBase))
     ]
     for i in range(len(cards)):
         cards[i]["description"] = ""
-        cards[i]["description"] += "Порода - " + CatBase[i][0] + "\n"
-        cards[i]["description"] += "Время жизни - " + CatBase[i][1] + "\n"
-        cards[i]["description"] += "Интеллект - " + CatBase[i][2] + "\n"
-        cards[i]["description"] += "Общительность - " + CatBase[i][3] + "\n"
-        cards[i]["description"] += "Ласковость - " + CatBase[i][4] + "\n"
-        cards[i]["description"] += "Шерсть - " + CatBase[i][5] + "\n"
-        cards[i]["description"] += "Размер - " + CatBase[i][6] + "\n"
-        cards[i]["description"] += "Активность - " + CatBase[i][7] + "\n"
-        cards[i]["description"] += "Здоровье - " + CatBase[i][8]
+        cards[i]["description"] += "Порода - " + CatBase[i][1] + "\n"
+        cards[i]["description"] += "Время жизни - " + CatBase[i][2] + "\n"
+        cards[i]["description"] += "Интеллект - " + CatBase[i][3] + "\n"
+        cards[i]["description"] += "Общительность - " + CatBase[i][4] + "\n"
+        cards[i]["description"] += "Ласковость - " + CatBase[i][5] + "\n"
+        cards[i]["description"] += "Шерсть - " + CatBase[i][6] + "\n"
+        cards[i]["description"] += "Размер - " + CatBase[i][7] + "\n"
+        cards[i]["description"] += "Активность - " + CatBase[i][8] + "\n"
+        cards[i]["description"] += "Здоровье - " + CatBase[i][9]
     print(cards[i]["description"])
     ads = [
         {"image": "ad_ibio.png",
