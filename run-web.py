@@ -61,13 +61,12 @@ def base_extended():
     for i in range(len(cards)):
         cards[i]["description"] = CatBase[i][10] + "\n"
         cards[i]["description"] += "Время жизни - " + CatBase[i][2] + "\n"
-        cards[i]["description"] += "Интеллект - " + CatBase[i][3] + "\n"
         cards[i]["description"] += "Общительность - " + CatBase[i][4] + "\n"
-        cards[i]["description"] += "Ласковость - " + CatBase[i][5] + "\n"
         cards[i]["description"] += "Шерсть - " + CatBase[i][6] + "\n"
         cards[i]["description"] += "Размер - " + CatBase[i][7] + "\n"
         cards[i]["description"] += "Активность - " + CatBase[i][8] + "\n"
-        cards[i]["description"] += "Здоровье - " + CatBase[i][9]
+        cards[i]["description"] += "Здоровье - " + CatBase[i][9] + "\n"
+        cards[i]["description"] += "Рекомендации к вакцинации: - " + CatBase[i][11]
     ads = [
         {"image": "ad_ibio.png",
          "url": "https://discord.com/oauth2/authorize?client_id=834775714011938866&permissions=8&scope=bot"},
