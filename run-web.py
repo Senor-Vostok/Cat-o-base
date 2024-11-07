@@ -8,7 +8,8 @@ cursor = conn.cursor()
 cursor.execute('SELECT * FROM cat_breeds')
 users = cursor.fetchall()
 for user in users:
-    CatBase.append(user[1:])
+    CatBase.append(user)
+    CatBase.sort(key=lambda x:x[1])
     CatPoints[user[1]] = 0
 conn.close()
 
