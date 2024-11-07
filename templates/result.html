@@ -9,11 +9,16 @@
             font-family: Arial, sans-serif;
             background-image: url('/static/cat_background_ext.png');
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             text-align: center;
+        }
+
+        .gif-container {
+            margin-bottom: 20px;
         }
 
         .container {
@@ -30,14 +35,22 @@
             margin-bottom: 20px;
         }
 
+        .recommendations {
+            font-size: 1em;
+            color: #555;
+            margin-top: 10px;
+        }
+
         .action-buttons {
             margin-top: 20px;
         }
 
-        .action-buttons button {
+        .action-buttons button,
+        .action-buttons a {
             padding: 12px 20px;
             background-color: #caa87c;
             color: white;
+            text-decoration: none;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -46,20 +59,7 @@
             margin: 10px;
         }
 
-        .action-buttons button:hover {
-            background-color: #8b5b29;
-        }
-
-        .action-buttons a {
-            display: inline-block;
-            padding: 12px 20px;
-            background-color: #caa87c;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
+        .action-buttons button:hover,
         .action-buttons a:hover {
             background-color: #8b5b29;
         }
@@ -69,6 +69,8 @@
 
 <div class="container">
     <div class="breed-name">{{ breed }}</div>
+    <div class="recommendations">Вам так же могут подойти:</div>
+    <div class="recommendations">{{ recommendations }}</div>
 
     <div class="action-buttons">
         <a href="/">На главную</a>

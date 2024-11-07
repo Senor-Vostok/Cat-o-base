@@ -58,8 +58,7 @@ def base_extended():
         range(len(CatBase))
     ]
     for i in range(len(cards)):
-        cards[i]["description"] = ""
-        cards[i]["description"] += "Порода - " + CatBase[i][0] + "\n"
+        cards[i]["description"] = CatBase[i][9] + "\n"
         cards[i]["description"] += "Время жизни - " + CatBase[i][1] + "\n"
         cards[i]["description"] += "Интеллект - " + CatBase[i][2] + "\n"
         cards[i]["description"] += "Общительность - " + CatBase[i][3] + "\n"
@@ -68,7 +67,6 @@ def base_extended():
         cards[i]["description"] += "Размер - " + CatBase[i][6] + "\n"
         cards[i]["description"] += "Активность - " + CatBase[i][7] + "\n"
         cards[i]["description"] += "Здоровье - " + CatBase[i][8]
-    print(cards[i]["description"])
     ads = [
         {"image": "ad_ibio.png",
          "url": "https://discord.com/oauth2/authorize?client_id=834775714011938866&permissions=8&scope=bot"},
@@ -93,7 +91,7 @@ def result():
     print(breed)
     for i in CatPoints:
         CatPoints[i] = 0
-    return render_template('result.html', breed=breed[0])
+    return render_template('result.html', breed=breed[0], recommendations=', '.join(breed[1:4]))
 
 
 if __name__ == '__main__':

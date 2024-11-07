@@ -73,7 +73,7 @@
         }
         .card.expanded {
             grid-column: span 3; /* Захватываем всю ширину */
-            height: 750px; /* Высота раскрытой карточки */
+            height: 850px; /* Высота раскрытой карточки */
         }
         .card img {
             width: 100%;
@@ -103,6 +103,9 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            position: sticky; /* Делаем контейнер липким */
+            top: 20px; /* Отступ от верхней границы окна */
+            align-self: flex-start; /* Закрепляем по верху контейнера */
         }
         .ad-image {
             width: 150px; /* Ширина карточки рекламы */
